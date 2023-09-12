@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세로형 페이지네이션</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px;
+        }
+
+        section {
+            border: 2px solid red;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        #page {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 30px;
+            align-items: center;
+        }
+
+        #page li {
+            background: #ccc;
+            border-radius: 100px;
+            text-indent: -9999px;
+            overflow: hidden;
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+            transition: ease all .3s;
+        }
+
+        #page li:hover {
+            background: #333
+        }
+
+        #page li.on {
+            width: 30px;
+            background: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>세로형 페이지네이션</h1>
+    <ul id="page">
+        <li>Home</li>
+        <li>Portfolio</li>
+        <li>Profile</li>
+        <li>SNS</li>
+        <li>Contact</li>
+    </ul>
+    <section id="Home"></section>
+    <section id="port"></section>
+    <section id="profile"></section>
+    <section id="sns"></section>
+    <section id="contact"></section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 스크롤에 의한 현재위치 표현
+        // (메뉴시작위치값 얻기)
+        var h = $(window).height() / 2,
+            menu1 = 0,
+            menu2 = $("#port").offset().top - h,
+            menu3 = $("#profile").offset().top - h,
+            menu4 = $("#sns").offset().top - h,
+            menu5 = $("#contact").offset().top - h;
+        $(window).scroll(function () {
+            var t = $(window).scrollTop();
+            $("#page li").removeClass("on");
+            if (t < menu2) {
+                $("#page li").eq(0).addClass("on");
+            } else if (t < menu3) {
+                $("#page li").eq(1).addClass("on");
+            } else if (t < menu4) {
+                $("#page li").eq(2).addClass("on");
+            } else if (t < menu5) {
+                $("#page li").eq(3).addClass("on");
+            } else {
+                $("#page li").eq(4).addClass("on");
+            }
+        })
+        // 페이지네이트 클릭기능
+        $("#page li").click(function () {
+            var menu = $("#page li").index(this);
+            var move = $("section").eq(menu).offset().top
+            $("html").animate({
+                scrollTop: move
+            }, 500)
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>패럴럭스 기법(속도차이에 의한 원근감 기법)</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+    }
+
+    header h1 {
+        text-align: center;
+        padding: 30px;
+        text-shadow: 2px 2px 4px #fff;
+    }
+
+    main>div {
+        border: 1px solid red;
+        box-sizing: border-box;
+        height: 300vh;
+    }
+
+    section {
+        border: 5px solid #eee;
+        box-sizing: border-box;
+        min-height: 100vh;
+    }
+
+    #content {
+        background: no-repeat center / cover url(img/bg.jpg);
+        position: sticky;
+        /* 일정 높이에서 고정시키는건 sticky  */
+        top: 100px;
+    }
+
+    #content .planet {
+        width: 100px;
+        height: 100px;
+        background: url(img/parallax1.png) center / cover;
+        position: absolute;
+        top: 200px;
+        right: 40px;
+    }
+
+    #content .planet:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        background: url(img/parallax2.png) center/cover;
+        top: 50%;
+        right: 20px;
+    }
+
+    #content .planet:nth-child(3) {
+        width: 400px;
+        height: 400px;
+        background: url(img/parallax2.png) center/cover;
+        top: 50%;
+        left: -200px;
+        right: auto;
+    }
+
+    footer {
+        background: #999;
+        height: 100px;
+    }
+</style>
+
+<body>
+    <header>
+        <h1>패럴럭스(Parallax Scroll)</h1>
+    </header>
+    <main>
+        <div>
+            <section id="content">
+                <div class="planet"></div>
+                <div class="planet"></div>
+                <div class="planet"></div>
+            </section>
+        </div>
+        <section id="contact"></section>
+        <section id="about"></section>
+    </main>
+    <footer>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(window).scroll(function () {
+            var t = $(this).scrollTop(); // 현재 스크롤값
+            console.log(t);
+            $(".planet").eq(0).css("margin-top", -t * 0.2);
+            $(".planet").eq(1).css("margin-top", -t * 0.6);
+            $(".planet").eq(2).css("margin-top", -t * 1.2);
+        })
+    </script>
+</body>
+
+</html>

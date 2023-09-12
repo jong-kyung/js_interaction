@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작품리스트 + 모달팝업</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .screen_out {
+        display: none;
+    }
+
+    img {
+        display: block;
+        width: 700px;
+        height: 700px;
+        object-fit: cover;
+    }
+
+    .blind {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, .8);
+        z-index: 100;
+        display: none;
+    }
+
+    #port details,
+    #port summary {
+        display: none;
+    }
+
+    #port li.on details {
+        display: block;
+        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 1px solid red;
+    }
+
+    .cate {
+        display: flex;
+        gap: 10px;
+        margin: 20px auto;
+        justify-content: center;
+    }
+
+    .cate button {
+        padding: 5px 10px;
+        background: none;
+        border: none;
+        color: #ccc
+    }
+
+    .cate button.on,
+    .cate button:hover {
+        color: #333
+    }
+</style>
+
+<body>
+    <h1>작품리스트 + 모달팝업 + 카테고리</h1>
+    <section id="port">
+        <h2 class="screen_out">포트폴리오</h2>
+        <h3>카테고리</h3>
+        <ul class="cate">
+            <li><button>all</button></li>
+            <li><button>video</button></li>
+            <li><button>web</button></li>
+            <li><button>graphic</button></li>
+        </ul>
+        <div class="blind"></div>
+        <ul>
+            <li class="cate_v"><img src="../나이키/nike_img/nike-airmax.jpg" alt="작품1"><a href="#">01 타이포활용 타이틀</a>
+                <details open>
+                    <summary>상세보기</summary>
+                    <img src="../나이키/nike_img/nike-airmax.jpg" alt="작품1 원본">
+                    <p>comment : 타이포를 활용해서 타이틀을 제작하였습니다.</p>
+                    <p>tool : Photoshop</p>
+                    <p>time : 3h</p>
+                </details>
+            </li>
+            <li class="cate_v"><img src="../나이키/nike_img/nike-airmax.jpg" alt="작품2"><a href="#">02 타이포활용 타이틀</a>
+                <details open>
+                    <summary>상세보기</summary>
+                    <img src="../나이키/nike_img/nike-airmax.jpg" alt="작품2 원본">
+                    <p>comment : 타이포를 활용해서 타이틀을 제작하였습니다.</p>
+                    <p>tool : Photoshop</p>
+                    <p>time : 3h</p>
+                </details>
+            </li>
+            <li class="cate_v"><img src="../나이키/nike_img/nike-airmax.jpg" alt="작품3"><a href="#">03 타이포활용 타이틀</a>
+                <details open>
+                    <summary>상세보기</summary>
+                    <img src="../나이키/nike_img/nike-airmax.jpg" alt="작품3 원본">
+                    <p>comment : 타이포를 활용해서 타이틀을 제작하였습니다.</p>
+                    <p>tool : Photoshop</p>
+                    <p>time : 3h</p>
+                </details>
+            </li>
+            <li class="cate_w"><img src="../나이키/nike_img/nike-airmax.jpg" alt="작품4"><a href="#">04 타이포활용 타이틀</a>
+                <details open>
+                    <summary>상세보기</summary>
+                    <img src="../나이키/nike_img/nike-airmax.jpg" alt="작품4 원본">
+                    <p>comment : 타이포를 활용해서 타이틀을 제작하였습니다.</p>
+                    <p>tool : Photoshop</p>
+                    <p>time : 3h</p>
+                </details>
+            </li>
+            <li class="cate_v"><img src="../나이키/nike_img/nike-airmax.jpg" alt="작품5"><a href="#">05 타이포활용 타이틀</a>
+                <details open>
+                    <summary>상세보기</summary>
+                    <img src="../나이키/nike_img/nike-airmax.jpg" alt="작품5 원본">
+                    <p>comment : 타이포를 활용해서 타이틀을 제작하였습니다.</p>
+                    <p>tool : Photoshop</p>
+                    <p>time : 3h</p>
+                </details>
+            </li>
+            <li class="cate_g"><img src="../나이키/nike_img/nike-airmax.jpg" alt="작품6"><a href="#">06 타이포활용 타이틀</a>
+                <details open>
+                    <summary>상세보기</summary>
+                    <img src="../나이키/nike_img/nike-airmax.jpg" alt="작품6 원본">
+                    <p>comment : 타이포를 활용해서 타이틀을 제작하였습니다.</p>
+                    <p>tool : Photoshop</p>
+                    <p>time : 3h</p>
+                </details>
+            </li>
+        </ul>
+
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        //모달팝업 열기
+        $("#port>ul:not(.cate) >li").click(function () {
+            $("#port .blind").fadeIn(700);
+            $(this).addClass("on");
+        });
+
+        //모달팝업 닫기
+        $(".blind").click(function () {
+            $(this).fadeOut("700");
+            $(".on").removeClass("on");
+        })
+        $("#port .cate button").click(function () {
+            $("#port .cate button").removeClass("on");
+            $(this).addClass("on");
+            var n = $("#port .cate button").index(this); //현재클릭한것(this)의 index값을 구해와라
+            $("#port>ul:not(.cate)>li").hide();
+            if (n == 0) {
+                $("#port>ul:not(.cate)>li").show();
+            } else if (n == 1) {
+                $("#port>ul:not(.cate)>li").hide();
+                $("#port>ul:not(.cate)>li.cate_v").show();
+            } else if (n == 2) {
+                $("#port>ul:not(.cate)>li").hide();
+                $("#port>ul:not(.cate)>li.cate_w").show();
+            } else {
+                $("#port>ul:not(.cate)>li").hide();
+                $("#port>ul:not(.cate)>li.cate_g").show();
+            }
+        })
+    </script>
+</body>
+
+</html>

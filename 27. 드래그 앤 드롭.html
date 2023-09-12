@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드래그 앤 드롭</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            padding: 50px;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px;
+        }
+
+        section {
+            display: flex;
+            gap: 20px
+        }
+
+        .drag_ui {
+            border: 1px solid #ccc;
+            width: 200px;
+            display: flex;
+            font-size: 0;
+            padding: 10px;
+        }
+
+        .drag_ui li {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .drag_ui img {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .drop_zone {
+            border: 1px dashed #ccc;
+            flex: 1;
+            min-height: 600px;
+            background: url(img/icon_banana.png) no-repeat center / cover
+        }
+
+        .drop_zone.on {
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>콘텐츠 드래그 기능</h1>
+    <section>
+        <ul class="drag_ui">
+            <li><img src="img/icon_apple.png" data-eng="apple">사과</li>
+            <li><img src="img/icon_banana.png">바나나</li>
+            <li><img src="img/icon_mango.png">망고</li>
+            <li><img src="img/icon_berry.png">딸기</li>
+        </ul>
+        <div class="drop_zone"></div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 팝업창 드래그 기능
+        var drag = false;
+        var start_x = 0, start_y = 0; // 드래그한 이동값
+        var window_left = 0, window_top = 0 // 팝업창의 좌표값
+        var drop_zone = false;
+        $(".drag_ui img").on({
+            "mousedown touchstart": function (e) {
+                drag = true;
+                drop_zone = false;
+                e.type == "mousedown" ? start_x = e.clientX : start_x = e.targetTouches[0].clientX;
+                e.type == "mousedown" ? start_y = e.clientY : start_y = e.targetTouches[0].clientY;
+                window_left = parseInt($(this).css("margin-left"));
+                window_top = parseInt($(this).css("margin-top"));
+                $(this).addClass("drag");
+                return false;
+            }, "mouseup touchend": function () {
+                //드롭
+                if (drop_zone) {
+                    var img = $(this).attr("src")
+                    // var eng = $(this).data("eng")
+                    $(".drop_zone").css("background", "url(" + img + ") no-repeat center / contain")
+                }
+                //드래그 종료
+                drag = false;
+                $(".drag").removeClass("drag");
+                $(this).removeAttr("style")
+            }
+        });
+        $(document).on({
+            "mousemove touchmove": function (e) {
+                if (drag) {
+                    var x, y;
+                    e.type == "mousemove" ? x = window_left + (e.clientX - start_x) : x = window_left + (e.targetTouches[0].clientX - start_x);
+                    e.type == "mousemove" ? y = window_top + (e.clientY - start_y) : y = window_top + (e.targetTouches[0].clientY - start_y);
+                    $(".drag").css("margin-left", x);
+                    $(".drag").css("margin-top", y);
+                    zone_check(e.clientX, e.clientY);
+                    return false;
+                }
+            }
+        });
+        function zone_check(x, y) {
+            var zone_x = $(".drop_zone").offset().left,
+                zone_y = $(".drop_zone").offset().top,
+                w = $(".drop_zone").width(),
+                h = $(".drop_zone").height();
+            if (x >= zone_x && x <= zone_x + w && y >= zone_y && y <= zone_y + h) {
+                drop_zone = true;
+            } else {
+                drop_zone = false;
+            }
+        }  
+    </script>
+</body>
+
+</html>

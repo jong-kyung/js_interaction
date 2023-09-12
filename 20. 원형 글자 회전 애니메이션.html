@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원형 글자 회전 애니메이션</title>
+    <style>
+        svg {
+            animation: circle linear infinite 10s;
+        }
+
+        .txt1 {
+            font-size: 19px;
+            letter-spacing: -0.2px;
+        }
+
+        @keyframes circle {
+            from {
+                transform: rotate(0);
+            }
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>원형 글자 회전 애니메이션</h1>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="300px" height="300px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+        <defs>
+            <path id="circlePath" d="M 150, 150 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0 " />
+        </defs>
+        <circle cx="150" cy="100" r="75" fill="none" />
+        <g>
+            <use xlink:href="#circlePath" fill="none" />
+            <text fill="#000" class="txt1">
+                <textPath xlink:href="#circlePath">Text rotating around a circle path with SVG!</textPath>
+            </text>
+        </g>
+    </svg>
+</body>
+
+</html>

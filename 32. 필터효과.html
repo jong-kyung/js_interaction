@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>호버시 필터효과</title>
+    <style>
+        img {
+            transition: ease all .3s;
+        }
+
+        img:hover {
+            filter: blur(5px) brightness(0.4);
+        }
+
+        /* https://developer.mozilla.org/ko/docs/Web/CSS/filter */
+        div {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+            margin-top: -160px;
+            backdrop-filter: invert(100%);
+        }
+
+        /* https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter */
+
+        div.mix {
+            margin-left: 300px;
+            margin-top: -300px;
+            backdrop-filter: none;
+            background: gray;
+            mix-blend-mode: multiply;
+        }
+
+        /* https://hyoni-k.tistory.com/48 */
+    </style>
+</head>
+
+<body>
+    <h1>호버시 필터효과</h1>
+    <h2>filter : 콘텐츠에 필터효과</h2>
+    <ul>
+        <li><img src="img/port.jpg"></li>
+    </ul>
+    <h2>backdrop-filter : 밑에 비춰보이는 콘텐츠에 효과</h2>
+    <div></div>
+    <h2>mix-blend-mode : 레이어 합성모드 효과</h2>
+    <div class="mix"></div>
+</body>
+
+</html>

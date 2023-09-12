@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자카운트</title>
+    <style>
+        body {
+            background: #FDFFCF;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            margin: 100px auto;
+            width: 80%;
+        }
+
+        .count-num {
+            text-align: center;
+            font-size: 35px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>숫자카운트</h1>
+    <ul>
+        <li data-num="100">100</li>
+        <li data-num="50">50</li>
+        <li data-num="30">30</li>
+        <li data-num="80">80</li>
+        <li data-num="60">60</li>
+    </ul>
+    <div class="flex">
+        <div class="col">
+            <p class="count-num" data-count="777">0</p>
+            <p>count 1</p>
+        </div>
+        <div class="col">
+            <p class="count-num" data-count="555">0</p>
+            <p>count 2</p>
+        </div>
+        <div class="col">
+            <p class="count-num" data-count="333">0</p>
+            <p>count 3</p>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    //카운트 기본
+    $("li").text(0);
+    function count(tag, toNum) {
+        var num = Number($(tag).text()); //Number() 숫자로 변환해줌
+        var num2 = num + Math.ceil((toNum - num) * 0.1) // 올림으로 해야 모션이 발생함 다른거 할 경우엔 무한루프에 빠짐
+        $(tag).text(num2);
+        setTimeout(function () {
+            count(tag, toNum)
+        }, 20)
+    }
+    // count($("li:eq(0)"), 100)
+    $("li").each(function (index, item) {
+        count($(item), $(item).data("num"))
+    })
+
+    //또다른방식
+    $('.count-num').each(function () {
+        var $this = $(this),
+            countTo = $this.attr('data-count');
+
+        $({ countNum: $this.text() }).animate({
+            countNum: countTo
+        },
+            {
+                duration: 3000,
+                easing: 'linear',
+                step: function () {
+                    $this.text(Math.floor(this.countNum));
+                },
+                complete: function () {
+                    $this.text(this.countNum);
+                }
+            });
+    });
+
+</script>
+
+</html>

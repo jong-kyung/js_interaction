@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커서에 반응하는 이미지</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        #circle {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #circle li {
+            background: green;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0 0 4px 4px #333;
+        }
+
+        .ball {
+            background: red;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: fixed;
+            margin: -25px 0 0 -25px;
+        }
+
+        .ball:nth-of-type(2) {
+            opacity: .8;
+        }
+
+        .ball:nth-of-type(3) {
+            opacity: .5;
+        }
+
+        .ball:nth-of-type(4) {
+            opacity: .1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>커서에 반응하는 이미지</h1>
+    <h2>그림자 효과</h2>
+    <ul id="circle">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <h2>마우스 트레이싱</h2>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <div class="ball"></div>
+    <p id="msg"></p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var window_w = $(window).width();
+        var window_h = $(window).height();
+        $(window).mousemove(function (e) {
+            // 그림자효과
+            var x = (e.clientX - window_w / 2) * -0.1, y = (e.clientY - window_h / 2) * -0.1;
+            $("#msg").text(e.clientX + "," + e.clientY)
+            $("#circle li").css("box-shadow", x + "px " + y + "px 4px 4px #333")
+
+            // 마우스를 쫓아가는 효과
+            setTimeout(function () {
+                $(".ball").eq(0).css({ "left": e.clientX, "top": e.clientY })
+            },10)
+            setTimeout(function () {
+                $(".ball").eq(1).css({ "left": e.clientX, "top": e.clientY })
+            },50)
+            setTimeout(function () {
+                $(".ball").eq(2).css({ "left": e.clientX, "top": e.clientY })
+            },100)
+            setTimeout(function () {
+                $(".ball").eq(3).css({ "left": e.clientX, "top": e.clientY })
+            },150)
+        });
+    </script>
+</body>
+
+</html>

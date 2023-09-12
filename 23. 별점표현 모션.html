@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>별점 표현하기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        #star {
+            width: 150px;
+            margin: auto;
+        }
+
+        #star>li {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #star i {
+            font-style: normal;
+            filter: grayscale(100%) opacity(0.2);
+        }
+
+        #star i.on {
+            filter: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>별점 표현하기</h1>
+    <ul id="star">
+        <li data-point="3"><span>HP</span><span class="screen_out"> : 3/5</span></li>
+        <li data-point="2"><span>MP</span><span class="screen_out"> : 2/5</span></li>
+        <li data-point="5"><span>SP</span><span class="screen_out"> : 5/5</span></li>
+        <li data-point="3"><span>STR</span><span class="screen_out"> : 3/5</span></li>
+        <li data-point="4"><span>DEX</span><span class="screen_out"> : 4/5</span></li>
+    </ul>
+    <span><i class="on">🍞</i><i class="on">🍞</i><i class="on">🍞</i><i>🍞</i><i>🍞</i></span>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 자동 별점 디자인 적용
+        $("#star li").each(function (index, item) {
+            let n = $(item).data("point");
+            let tag = "<span>";
+            for (var i = 0; i < 5; i++) {
+                if (i < n) {
+                    tag += "<i class='on'>🍞</i>"
+                } else { tag += "<i>🍞</i>" }
+            }
+            tag += "</span>"
+            $(item).append(tag)
+        }); // li 갯수만큼 반복해라 each 에서는 변수선언을 let으로 할 것
+    </script>
+</body>
+
+</html>

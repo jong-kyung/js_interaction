@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 작품리스트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        img,
+        input,
+        button,
+        a {
+            display: block;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* 작품리스트 */
+        section {
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        #port {
+            display: flex;
+            margin: auto;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        #port details {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 5px solid #ccc;
+            z-index: 1000;
+            background: #999;
+            padding: 20px;
+        }
+
+        #port li.on details {
+            display: block;
+            padding-right: 400px;
+        }
+
+        #port>li {
+            width: 400px;
+            min-width: 400px;
+            position: relative;
+            cursor: pointer;
+            height: 400px;
+            transition: ease all .3s;
+            -webkit-box-reflect: below 0px linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 100%);
+            margin-bottom: 180px;
+            box-shadow: 85px 0 40px -50px rgba(0, 0, 0, .15), -85px 0 40px -50px rgba(0, 0, 0, .15)
+        }
+
+        /* (입체효과) */
+        #port>li.center+li {
+            transform: translateZ(-200px) rotateY(-10deg);
+            filter: brightness(0.9)
+        }
+
+        #port>li.center+li+li {
+            transform: translateZ(-400px) rotateY(-20deg);
+            filter: brightness(0.8)
+        }
+
+        #port>li.center+li+li+li {
+            transform: translateZ(-600px) rotateY(-30deg);
+            filter: brightness(0.7)
+        }
+
+        #port>li.center+li+li+li+li {
+            transform: translateZ(-800px) rotateY(-40deg);
+            filter: brightness(0.6)
+        }
+
+        #port>li.left1 {
+            transform: translateZ(-200px) rotateY(10deg);
+            filter: brightness(0.9)
+        }
+
+        #port>li.left2 {
+            transform: translateZ(-400px) rotateY(20deg);
+            filter: brightness(0.8)
+        }
+
+        #port>li.left3 {
+            transform: translateZ(-600px) rotateY(30deg);
+            filter: brightness(0.7)
+        }
+
+        #port>li.left4 {
+            transform: translateZ(-800px) rotateY(40deg);
+            filter: brightness(0.6)
+        }
+
+        #port>li>a {
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            height: 300px;
+        }
+
+        #port>li>a>img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #port>li>p {
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ccc;
+            border-radius: 0 0 10px 10px;
+        }
+
+        #blind {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, .8);
+            z-index: 500;
+            backdrop-filter: blur(5px);
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <h2>Portfolio</h2>
+        <div id="blind"></div>
+        <ul id="port">
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>1. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>2. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>3. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li class="screen_out" ;>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>4. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>5. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>6. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>7. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+            <li>
+                <a href="img/01.png" target="_blank"><img src="img/01_thumb.jpg" alt="일러를 활용한 배너타이틀"></a>
+                <p><span>8. 타이포그래픽을 활용한 타이틀디자인</span></p>
+                <details open>
+                    <summary>Details</summary>
+                    <img src="img/01.png" alt="일러작품1">
+                    <p>comment : 타이포그래픽 디자인 모작으로 탄산느낌이 부각되도록 디자인</p>
+                    <p>tool : Illustrator</p>
+                    <p>work time : 1H</p>
+                </details>
+            </li>
+        </ul>
+        <div id="bt"><span></span><span></span></div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function make3d() {
+            // 작품리스트가 짝수일 때 센터교정
+            var port_num = $("#port>li:visible").length;
+            if (port_num % 2 == 0) $("#port").css("padding-right", "400px");
+            // 중앙작품 찾기
+            var n = parseInt(port_num / 2);
+            $("#port>li:visible").eq(n).addClass("center");
+            // 왼쪽작품들 3D효과적용
+            $("#port .center").prevUntil("li:visible:last").addClass("left1");
+            $("#port .center").prevUntil("li:visible").eq(port_num - 1).addClass("left2");
+            $("#port .center").prevUntil("li:visible").eq(port_num - 2).addClass("left3");
+            $("#port .center").prevUntil("li:visible").eq(port_num - 3).addClass("left3");
+            $("#port .center").prevUntil("li:visible").eq(port_num - 4).addClass("left3");
+        }
+        make3d();
+
+
+	//스크롤기능
+
+    </script>
+</body>
+
+</html>

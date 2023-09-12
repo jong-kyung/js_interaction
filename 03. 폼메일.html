@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼메일</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #868686;
+        }
+
+        fieldset {
+            border: none;
+        }
+
+        h2 {
+            padding: 50px;
+            text-align: center;
+        }
+
+        #contact {
+            max-width: 980px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #contact p {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        #contact p:first-child {
+            font-size: 36px;
+            font-weight: 900;
+            color: #292929;
+            line-height: 130%;
+        }
+
+        #contact p+p {
+            line-height: 150%;
+            margin-top: 30px;
+        }
+
+        #contact>div {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        #contact>div>div,
+        #contact fieldset {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        #contact .form_base {
+            border: 1px solid #ebebeb;
+            border-radius: 6px;
+            background: #f3f3f3;
+            height: 46px;
+            width: 100%;
+            padding: 0 20px;
+            line-height: 100%;
+            display: block;
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 600;
+            outline: none;
+        }
+
+        #contact .form_base:focus {
+            border-color: #b1b1b1;
+        }
+
+        #contact .form_base.alert {
+            border-color: #ef7f7f;
+        }
+
+        #contact .form_base.alert+span {
+            color: #ef7f7f;
+            font: 12px/12px dotum, 돋움, sans-serif;
+            position: absolute;
+            margin: -40px 0 0 20px;
+        }
+
+        #contact ::placeholder {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 400;
+            color: #b2b2b2;
+            font-size: 14px
+        }
+
+        #contact textarea.form_base {
+            padding-top: 15px;
+            min-height: 180px;
+        }
+
+        #contact input[name=answer] {
+            display: none;
+        }
+
+        #contact .fa {
+            font-size: 22px;
+            color: #d2d2d2;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        #contact .fa.fa-comment-o {
+            margin-top: -3px;
+            position: absolute;
+        }
+
+        #contact .fa.fa-check {
+            position: absolute;
+            right: 10px;
+            color: #5ab601;
+            margin-top: -50px;
+            display: none;
+        }
+
+        #contact input:checked+.fa {
+            color: #333;
+        }
+
+        #contact #msg~p {
+            padding: 5px 20px;
+        }
+
+        #contact #msg~div {
+            position: absolute;
+            margin: -25px 0 0 130px;
+        }
+
+        #contact button.form_base {
+            background: #292929;
+            color: #d4d4d4;
+            text-transform: uppercase;
+            font-family: 'Noto Sans KR';
+            font-size: 16px;
+            cursor: pointer;
+            margin: 50px 0 20px;
+            width: 180px;
+        }
+
+        #contact textarea+span {
+            display: none;
+        }
+
+        #contact textarea.alert+span {
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 class="screen_out">폼메일</h1>
+    <section id="contact">
+        <h2>Contact</h2>
+        <div>
+            <div>
+                <p>저에게 하고 싶은<br>이야기가 있으신가요?</p>
+                <p>답변 받고 싶은 연락처를 메세지에 같이 남겨주시면 지체없이 답변드리도록 하겠습니다.</p>
+            </div>
+            <fieldset>
+                <legend class="screen_out">메일 보내기</legend>
+                <label for="name" class="screen_out">이름</label>
+                <input type="text" placeholder="Name" id="user_name" class="form_base"><i class="fa fa-check"
+                    aria-hidden="true"></i>
+                <label for="subject" class="screen_out">제목</label>
+                <input type="text" placeholder="Subject" id="subject" class="form_base"><i class="fa fa-check"
+                    aria-hidden="true"></i>
+                <label for="msg" class="screen_out">내용</label>
+                <textarea placeholder="Message" id="msg" class="form_base" required></textarea><span>* 5자 이상
+                    입력해주세요!</span><i class="fa fa-check" aria-hidden="true"></i>
+                <p title="선호하는 답변유형">Answer type</p>
+                <div>
+                    <label><input type="radio" name="answer" value="이메일" checked><i class="fa fa-envelope-o"
+                            aria-hidden="true"></i><span class="screen_out">이메일</span></label>
+                    <label><input type="radio" name="answer" value="전화"><i class="fa fa-phone"
+                            aria-hidden="true"></i><span class="screen_out">전화</span></label>
+                    <label><input type="radio" name="answer" value="문자"><i class="fa fa-comment-o"
+                            aria-hidden="true"></i><span class="screen_out">문자</span></label>
+                </div>
+                <button class="form_base" id="send_bt">send</button>
+            </fieldset>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        //이름란에 유효성 검사
+        $("#user_name,#subject").keyup(function () {
+            var name = $(this).val().length;
+            if (name >= 2) {     //정상입력
+                $(this).next().fadeIn();
+                $(this).removeClass("alert")
+            } else {           //미입력
+                $(this).addClass("alert");
+                $(this).next().fadeOut();
+            }
+        });
+        //메세지란에 유효성 검사
+        $("#msg").keyup(function () {
+            var name = $(this).val().length;
+            if (name >= 5) {     //정상입력
+                $(this).next().next().fadeIn();
+                $(this).removeClass("alert")
+            } else {           //미입력
+                $(this).addClass("alert");
+                $(this).next().next().fadeOut();
+            }
+        });
+        $("#send_bt").click(function () {
+            var name = $("#user_name").val().length;
+            var subject = $("#subject").val().length;
+            var msg = $("#msg").val().length;
+            if (name < 2) {
+                $("#user_name").addClass("alert").focus();
+            } else if (subject < 2) {
+                $("#subject").addClass("alert").focus();
+            } else if (msg < 5) {
+                $("#msg").addClass("alert").focus();
+            } else {
+                email();
+            }
+        });
+        function email() {
+            var param = {
+                title: $("#subject").val(),
+                name: $("#user_name").val(),
+                answer: $("input[name=answer]:checked").val(),
+                content: $("#msg").val()
+            } // json 데이터타입
+            //alert(param);
+            console.log(param);
+            $.ajax({
+                url: "fmail.php",
+                type: "POST",
+                async: true,
+                data: param,
+                dataType: "JSON",
+                success: function (data) {
+                    if (data.result == "true") {
+                        alert("메일 전송이 완료 되었습니다.")
+                    }
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

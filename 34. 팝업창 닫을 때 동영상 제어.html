@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팝업창 닫을때 동영상제어</title>
+    <style>
+        /* 초기화 */
+        * {margin:0; padding:0; list-style:none; box-sizing:border-box;text-decoration:none;}
+    
+        /* 공통 */
+        .screen_out {display:none;}
+        h1 {text-align:center; padding:20px;}
+        img, video, iframe {object-fit: cover;max-width:100%; max-height:100%;display:block;}
+        iframe {min-width:500px; min-height:400px;}
+    
+        /* 슬라이드 */
+        #port {max-width: 1000px; margin:auto;}
+        #port>ul {display:flex;gap:20px;flex-wrap: wrap;justify-content: center;}
+        #port>ul>li {width:300px;height:300pxl}
+        #port a {display:block; width:100%; height:100%;}
+        #port img {display:block; width:100%; height:100%; object-fit: cover;}
+        #blind {position: fixed; left:0; top:0; background:rgba(0,0,0,0.6); width:100%; height:100vh;backdrop-filter: blur(10px);display: none;}
+        #port>ul>li details {display: none;position: fixed; left:50%; top:50%; transform: translate(-50%,-50%); max-width:90%; max-height:90%;border:1px solid red; min-width:300px; min-height:200px;}
+        #port>ul>li summary {display:none;}
+    </style>
+</head>
+<body>
+<h1>팝업창 닫을 때 동영상 제어</h1> 
+<section id="port">
+	<h2 class="screen_out">작품리스트</h2>
+	<div id="blind"></div>
+	<ul>
+		<li><a href="#"><img src="img/3d_1.jpg"></a>
+			<details open>
+				<summary>더보기</summary>
+				<video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" controls></video>
+			</details>
+		</li>
+		<li><a href="#"><img src="img/3d_2.jpg"></a>
+			<details open>
+				<summary>더보기</summary>
+				<video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4" controls></video>
+			</details></li>
+		<li><a href="#"><img src="img/3d_3.jpg"></a>
+			<details open>
+				<summary>더보기</summary>
+				<iframe src="https://www.youtube.com/embed/8qdeSDJviKQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</details>
+		</li>
+		<li><a href="#"><img src="img/3d_4.jpg"></a>
+			<details open>
+				<summary>더보기</summary>
+				<iframe src="https://www.youtube.com/embed/8qdeSDJviKQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</details></li>
+		<li><a href="#"><img src="img/3d_5.jpg"></a>
+			<details open>
+				<summary>더보기</summary>
+				<iframe src="https://www.youtube.com/embed/8qdeSDJviKQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</details></li>
+	</ul>
+</section>   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // 팝업창 열기
+    $("#port>ul>li").click(function(){
+        $("#blind").fadeIn();
+        $(this).addClass("on");
+        $(this).children("details").fadeIn();
+    });
+
+    // 팝업창 닫기
+    $("#blind").click(function(){
+        // video 태그 영상 멈추기(video 태그가 있으면)
+        if($("#port .on video").length > 0) { 
+            $("#port .on video").get(0).pause();
+            $("#port .on video").get(0).currentTime = 0;
+        }
+        // iframe 태그 영상 멈추기
+        if($("#port .on iframe").length > 0) { 
+            var video = $("#port .on iframe").clone();
+            $("#port .on iframe").remove();
+            $("#port .on summary").after(video);
+        }
+        // 팝업창 닫기
+        $(this).fadeOut();
+        $("#port .on details").fadeOut();
+    });
+</script>
+</body>
+</html>

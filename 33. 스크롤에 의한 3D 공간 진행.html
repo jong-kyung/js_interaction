@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스크롤에 의한 3D 공간 진행</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px;
+        }
+
+        header {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        header p {
+            border: 2px solid #eee;
+            color: #666;
+            font-size: 30px;
+            padding: 20px 40px;
+            margin: 30% auto auto;
+        }
+
+        main {
+            height: 1000vh;
+        }
+
+        main>div:first-child {
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            border: 1px solid red;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        #smog {
+            background: linear-gradient(to bottom, red 55%, rgba(255, 255, 255, 0) 65%);
+            box-sizing: border-box;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            border: 1px solid green;
+            top: 0;
+            display: none;
+        }
+
+        main>div>div {
+            transform-style: preserve-3d;
+            height: 100%;
+            width: 500%;
+            position: relative;
+            transform-origin: center;
+        }
+
+        section {
+            width: 100%;
+            height: 100px;
+            overflow: visible;
+            ;
+            position: absolute;
+            left: 0;
+            top: 55%;
+            border: 1px solid green;
+            transform-style: preserve-3d;
+        }
+
+        section .bg {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: center/cover url(img/planet_texture.png)
+        }
+
+        section .flat {
+            transform: rotate(0deg) rotateX(10deg) rotateY(0deg);
+        }
+
+        section#about {
+            transform: rotateY(0deg);
+        }
+
+        section#skill {
+            transform: rotateY(90deg);
+        }
+
+        section#port {
+            transform: rotateY(180deg);
+        }
+
+        section#contact {
+            transform: rotateY(270deg);
+        }
+
+        section>p {
+            padding: 20px 40px;
+            background: #666;
+            color: #fff;
+            text-align: center;
+            width: 300px;
+            display: none;
+        }
+
+        svg {
+            border: 5px solid transparent;
+            width: 100%;
+            aspect-ratio: 1/1;
+            position: absolute;
+            top: calc(100% - 200px);
+            box-sizing: border-box;
+            transform: translate3d(0, -50%, 0) rotateX(90deg);
+        }
+
+        svg circle {
+            stroke-width: 2;
+            stroke-dasharray: 0 30;
+            fill: none;
+            stroke: #aaa;
+            cx: 500;
+            cy: 500;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        footer {
+            background: #eee;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>스크롤에 의한 3D 공간 진행</h1>
+    <header>
+        <p>슬로건</p>
+    </header>
+    <main>
+        <div>
+            <div>
+                <section id="about">
+                    <div class="bg flat"></div>
+                    <p>콘텐츠</p>
+                </section>
+                <section id="skill">
+                    <div class="bg flat"></div>
+                    <p>콘텐츠</p>
+                </section>
+                <section id="port">
+                    <div class="bg flat"></div>
+                    <p>콘텐츠</p>
+                </section>
+                <section id="contact">
+                    <div class="bg flat"></div>
+                    <p>콘텐츠</p>
+                </section>
+                <svg version="1.1" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000"
+                    overflow="visible" xml:space="preserve">
+                    <circle r="490" />
+                    <circle r="460" />
+                    <circle r="430" />
+                </svg>
+            </div>
+
+        </div>
+        <div id="smog"></div>
+    </main>
+    <footer>푸터</footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var rotate = 0; //초기값
+        var content_top = $("main").offset().top;
+        $(window).scroll(function () {
+            var t = $(this).scrollTop();
+            var rotate_y = (t - content_top - 500) * .03;
+            $("main>div>div").css("transform", "rotateY(" + rotate_y + "deg)"); // 3D 콘텐츠 회전
+            // console.log(rotate_y*-1+ " : " + rotate_y);
+            // $(".flat").css("transform","rotateY("+(rotate_y*-1)+"deg)"); // 평면 콘텐츠 회전 되돌리기
+            // aa = window.getComputedStyle(con).getPropertyValue('transform');
+            // aa=aa.match(/matrix.*\((.+)\)/)[1].split(', ');
+            // console.log(aa);
+        });
+        // 설정(set)
+        document.body.style.setProperty('color', 'green');
+        document.body.style.setProperty('font-size', '16px'); // - 를 사용한것에 주목!
+        // 읽기(get)
+        var con = document.querySelector(".flat");
+        var aa = window.getComputedStyle(con).getPropertyValue('transform');
+        // translateZ 값만 얻어오기
+        console.log(aa);
+        aa = aa.match(/matrix.*\((.+)\)/)[1].split(', ');
+        // alert("translateZ값은 "+aa[14]);
+        // alert("translateZ값은 "+aa[14]);
+        var obj = $(".flat").eq(0);
+        function getRotationDegrees(obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else { var angle = 0; }
+            //return (angle < 0) ? angle + 360 : angle;
+            return angle;
+        }
+        console.log(getRotationDegrees(obj));
+
+        function getcsstransform(obj) {
+            var isIE = /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+            var TType = "undefined",
+                rotateX = 0,
+                rotateY = 0,
+                rotateZ = 0;
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== undefined && matrix !== 'none') {
+                // if matrix is 2d matrix
+                TType = "2D";
+                if (matrix.indexOf('matrix(') >= 0) {
+                    var values = matrix.split('(')[1].split(')')[0];
+                    if (isIE) {
+                        angle = parseFloat(values.replace('deg', STR_EMPTY));
+                    } else {
+                        values = values.split(',');
+                        var a = values[0];
+                        var b = values[1];
+                        var rotateZ = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+                    }
+                } else {
+                    // matrix is matrix3d
+                    TType = "3D";
+                    var values = matrix.split('(')[1].split(')')[0].split(',');
+                    var sinB = parseFloat(values[8]);
+                    var b = Math.round(Math.asin(sinB) * 180 / Math.PI);
+                    var cosB = Math.cos(b * Math.PI / 180);
+                    var matrixVal10 = parseFloat(values[9]);
+                    var a = Math.round(Math.asin(-matrixVal10 / cosB) * 180 / Math.PI);
+                    var matrixVal1 = parseFloat(values[0]);
+                    var c = Math.round(Math.acos(matrixVal1 / cosB) * 180 / Math.PI);
+                    rotateX = a;
+                    rotateY = b;
+                    rotateZ = c;
+                }
+            }
+            return { TType: TType, rotateX: rotateX, rotateY: rotateY, rotateZ: rotateZ };
+        };
+        console.log(getcsstransform(obj));
+// mAngle = getcsstransform($("#Objet3D"));
+// if (mAngle.TType=="2D")
+// {
+//     $("#Result").html("Transform 2D [rotateZ=" + mAngle.rotateZ + "&deg;]");
+// }else
+// {
+//     $("#Result").html("Transform 3D [rotateX=" + mAngle.rotateX + "&deg;|rotateY=" + mAngle.rotateY + "&deg;|rotateZ=" + mAngle.rotateZ + "&deg;]");
+// }
+    </script>
+</body>
+
+</html>

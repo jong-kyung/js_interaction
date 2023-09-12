@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 마스크</title>
+    <style>
+        img {
+            width: 400px;
+            clip-path: polygon(61% 0, 68% 38%, 100% 51%, 70% 65%, 74% 100%, 48% 76%, 7% 100%, 26% 59%, 0 11%, 43% 29%);
+            transition: ease all .3s;
+        }
+
+        img:hover {
+            width: 400px;
+            clip-path: polygon(50% 0, 100% 0, 100% 33%, 100% 67%, 100% 100%, 50% 100%, 0 100%, 0 67%, 0 33%, 0 0);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>이미지에 마스크(clip-mask)</h1>
+    <p>제너레이터 : https://bennettfeely.com/clippy/</p>
+    <img src="img/bg2.jpg">
+
+</body>
+
+</html>

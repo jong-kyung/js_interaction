@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세로정렬</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* 작품리스트 위아래 겹침을 방지하기위해 여백 추가*/
+        #port {
+            margin: 50px auto 200px;
+        }
+
+        #port>ul {
+            margin: auto;
+            max-width: 1000px;
+        }
+
+        #port li {
+            border: 2px solid red;
+            height: 300px;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        #port li.big {
+            height: 400px;
+        }
+
+        p {
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Masonry 라이브러리를 활용한 세로정렬</h1>
+    <section id="port">
+        <h2>Portfolio</h2>
+        <ul>
+            <li>1</li>
+            <li class="big">2</li>
+            <li>3</li>
+            <li>4</li>
+            <li class="big">5</li>
+            <li>6</li>
+            <li>7</li>
+            <li class="big">8</li>
+            <li>9</li>
+            <li class="big">10</li>
+            <li>11</li>
+            <li>12</li>
+        </ul>
+    </section>
+    <p>주의점 : marsonry 라이브러리를 사용한 경우에는 작품 li가 absolute 이기 때문에 부모의 높이값을 여유있게 늘려주는게 필요함.</p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <script>
+        $(window).ready(function () {
+            $("#port>ul").masonry({
+                itemSelector: "#port>ul>li",
+                gutter: 20
+            });
+            // 첫번째 열에 speed1 클래스 주기
+            var speed1 = $("#port>ul>li").eq(0).offset().left;
+            $("#port>ul>li").each(function (index, item) {
+                if ($(item).offset().left == speed1) {
+                    $(item).addClass("speed1");
+                }
+            })
+            // 네번째 열에 speed2 클래스 주기
+            var speed2 = $("#port>ul>li").eq(3).offset().left;
+            $("#port>ul>li").each(function (index, item) {
+                if ($(item).offset().left == speed2) {
+                    $(item).addClass("speed2");
+                }
+            })
+            // 두번째 열에 speed3 클래스 주기
+            var speed3 = $("#port>ul>li").eq(1).offset().left;
+            $("#port>ul>li").each(function (index, item) {
+                if ($(item).offset().left == speed3) {
+                    $(item).addClass("speed3");
+                }
+            })
+        });
+
+        $(window).scroll(function () {
+            var t = $("#port").offset().top; // 포폴의 높이(스크롤)값
+            var s = $(window).scrollTop();  // 현재 스크롤값
+            $(".speed1").css("margin-top", (s - t) * 0.4 + "px");
+            $(".speed2").css("margin-top", (s - t) * 0.6 + "px");
+            $(".speed3").css("margin-top", (s - t) * 0.2 + "px");
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>현재 위치 표현(호버시 밑줄이 옮겨가게)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            height: 3000px;
+        }
+
+        h1 {
+            padding: 30px;
+            text-align: center;
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            margin: auto;
+        }
+
+        li a {
+            display: block;
+            padding: 5px 15px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #bar {
+            background: #333;
+            width: 50px;
+            height: 3px;
+            transition: ease all 3s;
+            position: absolute;
+            left: 50%;
+        }
+
+        section {
+            min-height: 100vh;
+            border: 2px solid green
+        }
+    </style>
+</head>
+
+<body>
+    <h1>현재 위치 표현(호버시 밑줄이 옮겨가게)</h1>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#port">Portfolio</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#bbs">Notice</a></li>
+        </ul>
+        <div id="bar"></div>
+    </nav>
+    <section id="home"></section>
+    <section id="port"></section>
+    <section id="about"></section>
+    <section id="contact"></section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function menu_chk() {
+
+        }
+        var menu_gap = parseInt($("nav a").css("padding-left"))
+        // 메뉴 호버효과
+        $("nav a").hover(function () {
+            $("#bar").width($(this).width())
+                .css("left", $(this).offset().left + menu_gap + "px")
+        }, function () {
+            $("#bar").width($("nav a").eq(menu).width())
+                .css("left", $("nav a").eq(menu).offset().left + menu_gap + "px")
+        })
+
+        var h = $(window).height() / 2,
+            menu1 = 0,
+            menu2 = $("#port").offset().top - h,
+            menu3 = $("#about").offset().top - h,
+            menu4 = $("#contact").offset().top - h,
+            menu5 = $("#bbs").offset().top - h;
+        var menu = 0; // 현재 메뉴
+        $(window).scroll(function () {
+            var t = $(window).scrollTop();
+            if (t < menu2) {
+                $("#bar").width($("nav a").eq(0).width())
+                    .css("left", $("nav a").eq(0).offset().left + menu_gap + "px")
+                menu = 0;
+            } else if (t < menu3) {
+                $("#bar").width($("nav a").eq(1).width())
+                    .css("left", $("nav a").eq(1).offset().left + menu_gap + "px")
+                menu = 1;
+            } else if (t < menu4) {
+                $("#bar").width($("nav a").eq(2).width())
+                    .css("left", $("nav a").eq(2).offset().left + menu_gap + "px")
+                menu = 2;
+            } else if (t < menu5) {
+                $("#bar").width($("nav a").eq(3).width())
+                    .css("left", $("nav a").eq(3).offset().left + menu_gap + "px")
+                menu = 3;
+            } else {
+                $("#bar").width($("nav a").eq(4).width())
+                    .css("left", $("nav a").eq(4).offset().left + menu_gap + "px")
+                menu = 4;
+            }
+        })
+        // 페이지네이트 클릭기능
+        $("nav a").click(function () {
+            var menu = $("nav a").index(this);
+            var move = $("section").eq(menu).offset().top;
+            $("html").animate({
+                scrollTop: move
+            }, 500)
+            return false;
+        })
+    </script>
+</body>
+
+</html>

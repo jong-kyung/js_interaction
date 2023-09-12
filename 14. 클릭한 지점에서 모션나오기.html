@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클릭한 지점에서 모션나오기</title>
+    <style>
+        .ball {
+            background: red;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: fixed;
+            margin: -25px 0 0 -25px;
+            animation: ani 1s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes ani {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            40% {
+                transform: scale(0.1);
+                margin-top: 25px
+            }
+
+            100% {
+                opacity: 0;
+                margin-top: -125px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>클릭한 지점에서 모션 나오기</h1>
+    <!-- <div class="ball"></div> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var n = 0;
+        $(document).mousedown(function (e) {
+            n++;
+            var no = n;
+            console.log(n);
+            $("body").append("<div class='ball b" + no + "' ></div > ")
+            $(".ball:last").css({ "left": e.clientX, "top": e.clientY })
+            setTimeout(function () {
+                $(".b" + no).remove();
+            }, 1000)
+        })
+    </script>
+</body>
+
+</html>

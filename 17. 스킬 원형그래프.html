@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스킬(막대그래프) 모션</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            height: 3000px;
+            margin-top: 800px;
+        }
+
+        h1,
+        h2 {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        #skill {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #skill>li {
+            width: 150px;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        #skill>li::before {
+            content: "";
+            border-radius: 50%;
+            border: 6px solid #eee;
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            z-index: -1;
+            box-sizing: border-box;
+        }
+
+        #skill svg {
+            width: 150px;
+            height: 150px;
+        }
+
+        #skill span:nth-child(1) {
+            position: absolute;
+            bottom: -25px;
+            width: 100%;
+            text-align: center;
+            color: #ccc;
+        }
+
+        #skill span:nth-child(2) {
+            position: absolute;
+            color: red;
+            opacity: .5;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: tahoma, sans-serif;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #skill span:nth-child(2):last-letter {
+            color: blue
+        }
+
+        #skill>li:nth-child(1) circle {
+            transition-delay: 50ms;
+        }
+
+        #skill>li:nth-child(2) circle {
+            transition-delay: 100ms;
+        }
+
+        #skill>li:nth-child(3) circle {
+            transition-delay: 150ms;
+        }
+
+        #skill>li:nth-child(4) circle {
+            transition-delay: 200ms;
+        }
+
+        #skill>li:nth-child(5) circle {
+            transition-delay: 250ms;
+        }
+
+        #skill>li:nth-child(6) circle {
+            transition-delay: 300ms;
+        }
+
+        #skill svg circle {
+            fill: transparent;
+            stroke: red;
+            stroke-width: 4px;
+            stroke-dasharray: 302;
+            stroke-dashoffset: -302;
+            stroke-linecap: round;
+            transform: rotate(90deg) rotateY(180deg);
+            transform-origin: center;
+            transition: ease all .3s;
+            cx: 50;
+            cy: 50;
+            r: 48;
+        }
+
+        button {
+            display: block;
+            margin: 50px auto;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>스킬(원형그래프) 모션</h1>
+    <h1></h1>
+    <section>
+        <h2>Skill</h2>
+        <ul id="skill">
+            <li><span>포토샵</span> <span>80%</span><svg viewBox="0 0 100 100">
+                    <circle />
+                </svg></li>
+            <li><span>일러스트레이터</span> <span>60%</span><svg viewBox="0 0 100 100">
+                    <circle />
+                </svg></li>
+            <li><span>프리미어</span> <span>80%</span><svg viewBox="0 0 100 100">
+                    <circle />
+                </svg></li>
+            <li><span>애프터이펙트</span> <span>30%</span><svg viewBox="0 0 100 100">
+                    <circle />
+                </svg></li>
+            <li><span>HTML</span> <span>60%</span><svg viewBox="0 0 100 100">
+                    <circle />
+                </svg></li>
+            <li><span>CSS</span> <span>50%</span><svg viewBox="0 0 100 100">
+                    <circle />
+                </svg></li>
+        </ul>
+        <span></span>
+    </section>
+    <button>skill 토글</button>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function donut() {
+            $("#skill>li").each(function (index, item) {
+                let percent = 1 - (parseInt($(item).children("span:nth-child(2)").text()) * 0.01);
+                $(item).find("circle").css("stroke-dashoffset", percent *= -302);
+            }); 
+        }
+        var skill_chk = false;
+        $("button").click(function () {
+            if (skill_chk) {
+                $("#skill circle").css("stroke-dashoffset", -302);
+                skill_chk = false;
+            } else {
+                donut();
+                skill_chk = true;
+            }
+        });
+        var skill_top = $("#skill").offset().top,
+            skill_start = skill_top - $(window).height() * 0.7,
+            skill_end = skill_top;
+        $(window).scroll(function () {
+            var t = $(window).scrollTop();
+            if (t > skill_start && t < skill_end) {
+                donut();
+            } else {
+                $("#skill circle").css("stroke-dashoffset", -302);
+            }
+        });
+    </script>
+</body>
+
+</html>

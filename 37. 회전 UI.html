@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회전 UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        body {
+            height: 5000px;
+        }
+
+        #r_menu>ul {
+            width: 200px;
+            height: 200px;
+            position: fixed;
+            left: -80px;
+        }
+
+        #r_menu>ul>li {
+            position: absolute;
+            width: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-sizing: border-box;
+            transform-origin: right center;
+        }
+
+        #r_menu>ul>li:nth-child(2) {
+            transform: translateY(-50%) rotate(72deg);
+        }
+
+        #r_menu>ul>li:nth-child(3) {
+            transform: translateY(-50%) rotate(144deg);
+        }
+
+        #r_menu>ul>li:nth-child(4) {
+            transform: translateY(-50%) rotate(216deg);
+        }
+
+        #r_menu>ul>li:nth-child(5) {
+            transform: translateY(-50%) rotate(288deg);
+        }
+
+        #r_menu .fa {
+            font-size: 30px;
+        }
+
+        #msg {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>회전 UI</h1>
+    <nav id="r_menu">
+        <ul>
+            <li><i class="fa fa-bath"></i><span class="screen_out">메뉴1</span></li>
+            <li><i class="fa fa-envelope-open" aria-hidden="true"></i><span class="screen_out">메뉴2</span></li>
+            <li><i class="fa fa-id-card"></i><span class="screen_out">메뉴3</span></li>
+            <li><i class="fa fa-user-circle-o"></i><span class="screen_out">메뉴4</span></li>
+            <li><i class="fa fa-area-chart"></i><span class="screen_out">메뉴5</span></li>
+        </ul>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function rui() {
+            $("#r_menu>ul>li").each(function (index, item) {
+                let deg = (getRotate($(this)) * -1) - getRotate($("#r_menu>ul"));
+                $("#r_menu .fa").eq(index).css("transform", "rotate(" + deg + "deg)")
+            });
+        }
+        rui();
+        // 회전값는 함수
+        function getRotate(obj) {
+            var matrix = obj.css("-webkit-transform") ||
+                obj.css("-moz-transform") ||
+                obj.css("-ms-transform") ||
+                obj.css("-o-transform") ||
+                obj.css("transform");
+            if (matrix !== 'none') {
+                var values = matrix.split('(')[1].split(')')[0].split(',');
+                var a = values[0];
+                var b = values[1];
+                var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            } else { var angle = 0; }
+            return (angle < 0) ? angle + 360 : angle;
+        }
+        $(window).scroll(function () {
+            var t = $(this).scrollTop();
+            $("#r_menu>ul").css("transform", "rotate(" + t + "deg)");
+            rui();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동영상 미리보기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px 0 20px;
+        }
+
+        #video>ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #video>ul>li {
+            width: 200px;
+            height: 150px;
+            position: relative;
+        }
+
+        #video>ul>li>p {
+            position: absolute;
+            bottom: 0;
+            color: #fff;
+            background: rgba(0, 0, 0, .5);
+            text-align: center;
+            padding: 10px;
+        }
+
+        #video img,
+        #video video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #video details {
+            display: none;
+            width: 200px;
+            height: 150px;
+            transition: ease all 1s;
+            position: fixed;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        #video li.on details {
+            display: block;
+            margin-top: -150px;
+        }
+
+        #video li.on details.big {
+            width: 100vw;
+            height: 100vh;
+            margin-top: 0;
+            padding: 50px;
+        }
+
+        #video li.on details p {
+            display: none;
+        }
+
+        #video summary {
+            display: none;
+        }
+
+        #close_bt {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+            opacity: 0.3;
+            display: none;
+            z-index: 200;
+        }
+
+        #close_bt:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>동영상 미리보기</h1>
+    <section id="video">
+        <ul>
+            <li><img src="img/bg2.jpg" alt="영상작품1 썸네일">
+                <p>cinema4d를 활용한 우주배경표현1</p>
+                <details open>
+                    <summary>자세히보기</summary>
+                    <video src="img/ex.mp4" muted></video>
+                    <p>이 작품은 멀티04반 공식 예제 영상 파일 입니다.</p>
+                </details>
+            </li>
+            <li><img src="img/bg2.jpg" alt="영상작품1 썸네일">
+                <p>cinema4d를 활용한 우주배경표현2</p>
+                <details open>
+                    <summary>자세히보기</summary>
+                    <video src="img/ex2.mp4" muted></video>
+                </details>
+            </li>
+            <li><img src="img/bg2.jpg" alt="영상작품1 썸네일">
+                <p>cinema4d를 활용한 우주배경표현3</p>
+                <details open>
+                    <summary>자세히보기</summary>
+                    <video src="img/ex.mp4" muted></video>
+                </details>
+            </li>
+        </ul>
+        <div id="close_bt">영상닫기</div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 마우스 호버시 미리보기
+        $("#video>ul>li").hover(function () {
+            $(this).addClass("on");
+            var l = $(this).children("details").css("left");
+            var t = $(this).children("details").css("top");
+            $(this).children("details").css("left", l)
+            $(this).children("details").css("top", t)
+            $(this).find("video").get(0).play();
+        }, function () {
+            $(this).removeClass("on");
+            $(this).find("video").get(0).pause();
+            $(this).find("video").get(0).currentTime = 0;
+        });
+
+        // 클릭이벤트:영상 크게보기
+        $("#video>ul>li").click(function () {
+            $(this).children("details").addClass("big");
+            $(this).children("details").css({ left: 0, top: 0 });
+            $(this).find("video").get(0).play();
+            $("#close_bt").fadeIn();
+        });
+        $("#close_bt").mouseover(function () {
+            return false;
+        });
+    </script>
+</body>
+
+</html>

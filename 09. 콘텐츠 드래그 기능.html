@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콘텐츠 드래그 기능</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .screen_out {
+            display: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px;
+        }
+
+        #profile {
+            height: 100vh;
+            position: relative;
+        }
+
+        #profile .popup {
+            border: 1px solid gray;
+            background: #eee;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 200px;
+            height: 150px;
+            cursor: pointer;
+        }
+
+        #profile .popup.min {
+            height: 22px;
+            overflow: hidden;
+        }
+
+        #profile .popup:nth-of-type(2) {
+            left: 120px;
+            top: 120px;
+        }
+
+        #profile .popup:nth-of-type(3) {
+            left: 140px;
+            top: 140px;
+        }
+
+        #profile .popup p {
+            text-align: center;
+            margin-top: 20px;
+            user-select: none;
+        }
+
+        #profile .popup button {
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #ccc;
+            top: 0;
+            right: 2px;
+            position: absolute;
+        }
+
+        #profile .popup button:nth-of-type(2) {
+            right: 27px;
+        }
+
+        #profile .popup button:nth-of-type(1) {
+            right: 52px;
+        }
+
+        #profile .popup button:hover {
+            color: #333
+        }
+
+        #msg {
+            position: fixed;
+            bottom: 100px;
+            left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>콘텐츠 드래그 기능</h1>
+    <section id="profile">
+        <div class="popup min" id="window1">
+            <p>팝업창1</p>
+            <button class="maximize"><i class="fa fa-window-maximize"></i><span class="screen_out">최대화</span></button>
+            <button class="minimize"><i class="fa fa-window-minimize"></i><span class="screen_out">최소화</span></button>
+            <button class="close"><i class="fa fa-window-close"></i><span class="screen_out">창닫기</span></button>
+        </div>
+        <div class="popup" id="window2">
+            <p>팝업창2</p>
+            <button class="maximize"><i class="fa fa-window-maximize"></i><span class="screen_out">최대화</span></button>
+            <button class="minimize"><i class="fa fa-window-minimize"></i><span class="screen_out">최소화</span></button>
+            <button class="close"><i class="fa fa-window-close"></i><span class="screen_out">창닫기</span></button>
+        </div>
+        <div class="popup" id="window3">
+            <p>팝업창3</p>
+            <button class="maximize"><i class="fa fa-window-maximize"></i><span class="screen_out">최대화</span></button>
+            <button class="minimize"><i class="fa fa-window-minimize"></i><span class="screen_out">최소화</span></button>
+            <button class="close"><i class="fa fa-window-close"></i><span class="screen_out">창닫기</span></button>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        //팝업창 드래그 기능
+        var drag = false;
+        var start_x = 0, start_y = 0; //드래그한 이동값
+        var window_left = 0, window_top = 0; //팝업창의 좌표값
+        $(".popup").on({
+            "mousedown touchstart": function (e) {
+                drag = true;
+                e.type == "mousedown" ? start_x = e.clientX : start_x = e.targetTouches[0].clientX;
+                e.type == "mousedown" ? start_y = e.clientY : start_y = e.targetTouches[0].clientY;
+                window_left = parseInt($(this).css("margin-left"));
+                window_top = parseInt($(this).css("margin-top"));
+                $(this).addClass("drag");
+                return false;
+            }, "mouseup touchend": function () {
+                drag = false
+                $(".drag").removeClass("drag");
+            }
+        });
+        $(document).on({
+            "mousemove touchmove": function (e) {
+                if (drag) {
+                    var x, y;
+                    e.type == "mousemove" ? x = window_left + (e.clientX - start_x) : x = window_left + (e.targetTouches[0].clientX - start_x);
+                    e.type == "mousemove" ? y = window_top + (e.clientY - start_y) : y = window_top + (e.targetTouches[0].clientY - start_y);
+                    $(".drag").css("margin-left", x);
+                    $(".drag").css("margin-top", y); // client는 커서의 좌표를 받아옴
+                    return false; // 기존의 이벤트를 제거 해주기 위함 + 콘텐츠가 마우스를 따라오지 않게 하기 위함
+                }
+            }
+        });
+        // $(document).on({
+        //     "mouseup touchend": function () {
+        //         drag = false
+        //         $(".drag").removeClass("drag");
+        //     }
+        // })
+        //팝업창 최대화 
+        $(".maximaize").click(function () {
+            $(this).parent().removeClass("min")
+        })
+        //팝업창 최소화
+        $(".minimize").click(function () {
+            $(this).parent().addClass("min")
+        })
+        // 팝업창 닫기
+        $(".close").click(function () {
+            $(this).parent().hide();
+        })
+    </script>
+</body>
+
+</html>

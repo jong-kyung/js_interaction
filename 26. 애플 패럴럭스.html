@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Parallax style</title>
+    <style>
+        :root {
+            --color1: red;
+            --color2: orange;
+            --color3: yellow;
+            --color4: green;
+            --color5: blue;
+            --color6: navy;
+            --color7: purple;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px
+        }
+
+        section {
+            border: 5px solid gray;
+            min-height: 100vh;
+        }
+
+        #video_section section:nth-of-type(1) {
+            border-color: var(--color1);
+            background: var(--color1)
+        }
+
+        #video_section section:nth-of-type(2) {
+            border-color: var(--color2);
+            background: var(--color2)
+        }
+
+        #video_section section:nth-of-type(3) {
+            border-color: var(--color3);
+            background: var(--color3)
+        }
+
+        #video_section+section {
+            border-color: var(--color4);
+            background: var(--color4)
+        }
+
+        #video_fix {
+            position: sticky;
+            top: 0;
+            height: 0;
+        }
+
+        #video_fix>div {
+            width: 600px;
+            height: 400px;
+            object-fit: cover;
+            position: absolute;
+            top: 50vh;
+            right: 20px;
+            margin-top: -200px;
+            overflow: hidden;
+        }
+
+        #video_fix>div:nth-child(1) {
+            z-index: 1000;
+            height: 100px;
+        }
+
+        #video_fix>div:nth-child(2) {
+            z-index: 900;
+        }
+
+        #video_fix>div:nth-child(3) {
+            z-index: 800;
+        }
+
+        #video_fix>div:nth-child(4) {
+            z-index: 700;
+        }
+
+        #video_fix>div>video {
+            display: block;
+            height: 400px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Apple Parallax style</h1>
+    <p>레퍼런스 : https://www.apple.com/apple-tv-4k/</p>
+    <h2>기능리스트</h2>
+    <ul>
+        <li>스크롤시 영상 고정(마크업+sticky)</li>
+        <li>영상의 마스크기능(script)</li>
+    </ul>
+    <section>
+        <h2>일반섹션</h2>
+    </section>
+    <div id="video_section">
+        <div id="video_fix">
+            <div><video
+                    src="https://www.apple.com/105/media/us/apple-tv-4k/2022/90c4e81a-c161-4f7f-9ea3-137ffd1054f5/anim/tv-plus/large.mp4"
+                    loop muted autoplay></video></div>
+            <div><video
+                    src="https://www.apple.com/105/media/us/apple-tv-4k/2022/90c4e81a-c161-4f7f-9ea3-137ffd1054f5/anim/fitness/large.mp4"
+                    loop muted autoplay></video></div>
+            <div><video
+                    src="https://www.apple.com/105/media/us/apple-tv-4k/2022/90c4e81a-c161-4f7f-9ea3-137ffd1054f5/anim/music/large.mp4"
+                    loop muted autoplay></video></div>
+            <div><video
+                    src="https://www.apple.com/105/media/us/apple-tv-4k/2022/90c4e81a-c161-4f7f-9ea3-137ffd1054f5/anim/arcade/large.mp4"
+                    loop muted autoplay></video></div>
+        </div>
+        <section>
+            <h2>동영상섹션</h2>
+        </section>
+        <section class="v_section">
+            <h2>동영상섹션</h2>
+        </section>
+        <section class="v_section">
+            <h2>동영상섹션</h2>
+        </section>
+    </div>
+    <section class="v_section">
+        <h2>동영상섹션</h2>
+    </section>
+    <section>
+        <h2>일반섹션</h2>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $(window).scroll(function () {
+            var t = $(this).scrollTop();
+            for (var i = 0; i < $(".v_section").length; i++) {
+                let h = $("#video_fix video").eq(i).offset().top; // 비디오의 top값
+                let mask_h = $(".v_section").eq(i).offset().top - h;
+                if (mask_h < 400) {
+                    $("#video_fix >div").eq(i).height(mask_h);
+                } else {
+                    $("#video_fix >div").eq(i).height(400);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

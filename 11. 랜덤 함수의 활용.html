@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜덤함수의 활용</title>
+    <style>
+        img {
+            max-width: 80%;
+            display: block;
+            width: 400px;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        #rd {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 0;
+        }
+
+        #rd li {
+            background: red;
+            list-style: none;
+            min-width: 100px;
+            min-height: 100px;
+        }
+
+        #rd.theme1 {
+            justify-content: space-between;
+        }
+
+        #rd.theme1 li {
+            background: green;
+        }
+
+        #rd.theme2 {
+            justify-content: space-between;
+        }
+
+        #rd.theme2 li {
+            background: orange;
+        }
+
+        #rd.theme3 {
+            justify-content: space-between;
+        }
+
+        #rd.theme3 li {
+            background: blue;
+        }
+
+        div {
+            border: 1px dashed #ccc;
+            height: 200px;
+            position: relative;
+        }
+
+        div span {
+            background: red;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            top: 0;
+            left: 0;
+            transition: ease all 2s;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>랜덤함수의 활용</h1>
+    <h2>랜덤이미지</h2>
+    <img src="img/3d_1.jpg">
+    <h2>랜덤 디자인</h2>
+    <ul id="rd">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <h2>랜덤무빙</h2>
+    <div>
+        <span>
+
+        </span>
+    </div>
+    <p>안녕</p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        var ran = Math.ceil(Math.random() * 6); // 1~6 랜덤값 추출
+        // var ran = Math.floor(Math.random()*6); // 0~5 랜덤값 추출
+
+        //랜덤 이미지
+        $("img").attr("src", "img/3d_" + ran + ".jpg")
+
+        //랜덤 디자인
+        var ran2 = Math.ceil(Math.random() * 3); // 1~6 랜덤값 추출
+        $("#rd").addClass("theme" + ran2)
+
+        //랜덤무빙
+        setInterval(function () {
+            x = Math.floor(Math.random() * ($("div").width() - $("span").width())); // 0~div 넓이 추출
+            y = Math.floor(Math.random() * ($("div").height() - $("span").height()))
+            $("span").css({ "left": x, "top": y })
+        }, 2000)
+        //랜덤 텍스트
+        var msg = ["안녕하세요","반갑습니다","환영합니다"]
+        var ran3 = Math.floor(Math.random() * 3); // 1~6 랜덤값 추출
+        $("p").text(msg[ran3])
+    </script>
+</body>
+
+</html>

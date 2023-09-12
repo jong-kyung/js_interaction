@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이핑효과</title>
+    <style>
+        p {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        p::after {
+            content: "";
+            border-right: 1px solid #000;
+            animation: cursor linear 1s infinite;
+        }
+
+        @keyframes cursor {
+            0% {
+                border-color: #000;
+            }
+
+            50% {
+                border-color: #000;
+            }
+
+            50.0001% {
+                border-color: #fff;
+            }
+
+            100% {
+                border-color: #fff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>타이핑 효과</h1>
+    <h2>한 줄용</h2>
+    <p class="txt1">Welcome to my homepage</p>
+    <h2>여러줄 & 태그가 섞여 있는 경우</h2>
+    <p class="txt2"><strong>Welcome</strong> to<br> my homepage</p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // 한 줄형
+        var txt1 = $(".txt1").text();
+        var txt1_count = 0;
+        // alert(txt1.substring(0,3)); //Wel
+        var typing1 = setInterval(function () {
+            txt1_count++;
+            $(".txt1").text(txt1.substring(0, txt1_count));
+            // if(txt1_count > txt1.length) {
+            //     clearInterval(typing1);
+            //     //alert("아직 안멈춤");
+            // }
+            if (txt1_count > txt1.length + 20) txt1_count = 0;
+        }, 100);
+
+        // 여러줄형(중간에 태그가 있는거)
+        var txt2 = $(".txt2").html();
+        var txt2_count = 0;
+        var tag = false;
+
+        var typing2 = setInterval(function () {
+
+            if (txt2[txt2_count] == "<") tag = true;
+            if (txt2[txt2_count] == ">") tag = false;
+            if (!tag) $(".txt2").html(txt2.substring(0, txt2_count));
+            txt2_count++;
+
+            // if(txt2_count > txt2.length) {
+            //     clearInterval(typing2);
+            //     //alert("아직 안멈춤");
+            // }
+            // 반복타이핑 기능
+            if (txt2_count > txt2.length + 20) txt2_count = 0;
+        }, 100);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원형 슬라이드(드래그형)</title>
+    <style>
+        :root {
+            --angle: calc(360deg/10);
+            /*10은 작품갯수*/
+            --circleSize: 1020px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px;
+        }
+
+        section {
+            background: #eee;
+            padding-top: 100px;
+            overflow: hidden;
+        }
+
+        #list {
+            height: 600px;
+            margin: auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            transform-origin: center var(--circleSize);
+            transform: rotate(0)
+        }
+
+        #list>li {
+            width: 300px;
+            height: 400px;
+            text-align: center;
+            line-height: 400px;
+            background: #999;
+            position: absolute;
+            transform-origin: center var(--circleSize);
+            transform: rotate(var(--angle));
+            user-select: none;
+        }
+
+        #list>li:nth-child(2) {
+            transform: rotate(calc(var(--angle)*2))
+        }
+
+        #list>li:nth-child(3) {
+            transform: rotate(calc(var(--angle)*3))
+        }
+
+        #list>li:nth-child(4) {
+            transform: rotate(calc(var(--angle)*4))
+        }
+
+        #list>li:nth-child(5) {
+            transform: rotate(calc(var(--angle)*5))
+        }
+
+        #list>li:nth-child(6) {
+            transform: rotate(calc(var(--angle)*6))
+        }
+
+        #list>li:nth-child(7) {
+            transform: rotate(calc(var(--angle)*7))
+        }
+
+        #list>li:nth-child(8) {
+            transform: rotate(calc(var(--angle)*8))
+        }
+
+        #list>li:nth-child(9) {
+            transform: rotate(calc(var(--angle)*9))
+        }
+
+        #list>li:nth-child(10) {
+            transform: rotate(calc(var(--angle)*10))
+        }
+    </style>
+</head>
+
+<body>
+    <h1>원형 슬라이드(드래그형)</h1>
+    <section>
+        <ul id="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+        </ul>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 드래그 회전 기능
+        var drag = false;
+        var start_x = 0; // 드래그한 이동값
+        var list_angle = 0; // 리스트 ul 앵글값(드래그 한 값을 적용할 수치)
+        $("section").on({
+            "mousedown touchstart": function (e) {
+                drag = true;
+                e.type == "mousedown" ? start_x = e.clientX : start_x = e.targetTouches[0].clientX;
+                list_angle = calculateDeg('#list');
+                $(this).children("#list").addClass("drag");
+                console.log(list_angle);
+                return false;
+            }, "mouseup touchend": function () {
+                drag = false;
+                $(".drag").removeClass("drag");
+            }
+        });
+        $(document).on({
+            "mousemove touchmove": function (e) {
+                if (drag) {
+                    var x;
+                    e.type == "mousemove" ? x = list_angle + (e.clientX - start_x) / 10 : x = list_angle + (e.targetTouches[0].clientX - start_x);
+                    $(".drag").css("transform", "rotate(" + x + "deg)");
+                    console.log(x);
+                    return false;
+                }
+            }
+        });
+
+        // 회전 각도 얻기 함수
+        function calculateDeg(selector) {
+            var tr = $(selector).css('transform');
+            var values = tr.split('(')[1].split(')')[0].split(',');
+            var a = values[0];
+            var b = values[1];
+            var c = values[2];
+            var d = values[3];
+            var scale = Math.sqrt(a * a + b * b);
+            var sin = b / scale;
+            var angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            return angle
+        }
+    </script>
+</body>
+
+</html>

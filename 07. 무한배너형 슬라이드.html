@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슬라이드(무한 배너형)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 50px;
+        }
+
+        #banner {
+            border: 1px solid red;
+            overflow: hidden;
+        }
+
+        #banner ul {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        #banner li {
+            width: 200px;
+            height: 200px;
+            background: #333;
+            color: #fff;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>슬라이드(무한 배너형)</h1>
+    <section id="banner">
+        <ul>
+            <li>내용1</li>
+            <li>내용2</li>
+            <!-- <li>내용3</li>
+            <li>내용4</li>
+            <li>내용5</li> -->
+        </ul>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var ul_ori_width = $("#banner> ul").width(); // 초기값을 저장하기 위한용도
+        var ul_width = $("#banner> ul").width(); // 복사하기 위한용도
+        //콘텐츠 복사하기
+        var li = $("#banner> ul").html(); // ul 안의 li들을 변수에 담음
+        var section = $("#banner").width();
+        $("#banner> ul").append(li);
+        ul_width += ul_width;
+        while (section * 2 > ul_width) {
+            $("#banner> ul").append(li);
+            ul_width += ul_width;
+            var li = $("#banner> ul").html(); // 정상적인 방법이 아니긴함
+        }
+        //무한 슬라이드
+        var ul_left;
+        var auto = true;
+        setInterval(function () {
+            if (auto) {
+                ul_left = parseInt($("#banner>ul").css("margin-left"));
+                if (-ul_ori_width >= ul_left + parseInt($("#banner>ul").css("gap"))) {
+                    $("#banner>ul").css("margin-left", 0)
+                } else {
+                    ul_left -= 2;
+                    $("#banner>ul").css("margin-left", ul_left)
+                }
+            }
+        }, 20)
+        $("#banner").hover(function () {
+            auto = false;
+        }, function () {
+            auto = true;
+        }) // 첫번째: 마우스 오버할때 두번째 :마우스 아웃할때
+    </script>
+</body>
+
+</html>
